@@ -1,0 +1,28 @@
+
+{
+  "device_name": "My Sync Device",
+  "listening_port" : 44444,                       // 0 - randomize port
+
+//  "storage_path" : "/home/mik/.sync",
+
+  "check_for_updates" : true,
+  "use_upnp" : false,                              // use UPnP for port mapping
+
+  "shared_folders" :
+  [
+    {
+      "secret" : "AAJ4ALLFYGFNQZH676QLOAKMNFXKP7PLP",
+      "dir" : "/home/mik", 
+      "use_relay_server" : true,
+      "use_tracker" : true,
+      "use_dht" : false,
+      "search_lan" : true,
+      "use_sync_trash" : true,
+      "known_hosts" :
+      [
+        "192.168.224.6:44444"
+      ]
+    }
+  ]
+
+}

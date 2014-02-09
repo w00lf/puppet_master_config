@@ -14,6 +14,15 @@ node /^puppet.+agent\d?\.ddc\.local$/  {
   include packages
 	include psql_managment
 
+  btsync::instance { 'mik':
+    storage_path => '/home/mik/.sync',
+    webui        => {
+      listen   => '0.0.0.0:8888',
+      login    => 'admin',
+      password => 'password',
+    }
+  }
+
 	$whisper_dirs = [ "/usr/local/whisper/", "/usr/local/whisper/2.0",
                   "/usr/local/whisper/2.0/bin", "/usr/local/whisper/2.0/log",
                 ]
