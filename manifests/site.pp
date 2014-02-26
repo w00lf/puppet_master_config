@@ -13,16 +13,16 @@ node /^puppet.+agent\d?\.ddc\.local$/  {
 	include sudoers
   include packages
 	include psql_managment
+  
+  register_node($::ipaddress, $::fqdn, 44444)
 
-  btsync::instance { 'mik':
-    storage_path => '/home/mik/.sync',
-    webui        => {
-      listen   => '0.0.0.0:8888',
-      login    => 'admin',
-      password => 'password',
-    }
+  # $::ipaddress $::fqdn
+  $domain_name = $::fqdn
+  file {'btsync.conf':
+    ensure  => present,
+    content => template('btsync.conf.erb'),
+    path => '/home/mik/btsync/development.conf',
   }
-
 	$whisper_dirs = [ "/usr/local/whisper/", "/usr/local/whisper/2.0",
                   "/usr/local/whisper/2.0/bin", "/usr/local/whisper/2.0/log",
                 ]

@@ -1,0 +1,48 @@
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: debug_orf
+#   pool: 10
+#   username: guest
+
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: rake_fias_test
+#   pool: 10
+#   username: guest
+
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: debug_orf
+#   pool: 5
+#   username: orfograph
+#   password: HjeRd8dS
+#   host: 192.168.224.107
+#   port: 5432
+
+# test:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: orfograph_test
+#  pool: 5
+#  username: guest
+
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: debug_orf
+#   pool: 5
+#   username: orfograph
+#   password: HjeRd8dS
+#   host: 192.168.224.107
+#   port: 5432
+
+adapter: postgresql
+encoding: unicode
+database: test_debug
+pool: 5
+username: orfograph
+password: HjeRd8dS
+port: 5432
