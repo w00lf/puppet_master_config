@@ -47,6 +47,7 @@ Puppet::Type.newtype(:postgresql_psql) do
 
   newparam(:db) do
     desc "The name of the database to execute the SQL command against."
+    defaultto("postgres")
   end
 
   newparam(:search_path) do
@@ -60,12 +61,12 @@ Puppet::Type.newtype(:postgresql_psql) do
 
   newparam(:psql_user) do
     desc "The system user account under which the psql command should be executed."
-    defaultto("postgres")
+    defaultto("pgsql")
   end
 
   newparam(:psql_group) do
     desc "The system user group account under which the psql command should be executed."
-    defaultto("postgres")
+    defaultto("pgsql")
   end
 
   newparam(:cwd, :parent => Puppet::Parameter::Path) do

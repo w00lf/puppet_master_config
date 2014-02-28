@@ -19,6 +19,7 @@ define postgresql::server::database(
     psql_user  => $user,
     psql_group => $group,
     psql_path  => $psql_path,
+    db         => 'postgres'
   }
 
   # Optionally set the locale switch. Older versions of createdb may not accept
@@ -60,7 +61,7 @@ define postgresql::server::database(
   # This will prevent users from connecting to the database unless they've been
   #  granted privileges.
   postgresql_psql {"REVOKE ${public_revoke_privilege} ON DATABASE \"${dbname}\" FROM public":
-    db          => $user,
+    db          => 'postgres',
     refreshonly => true,
   }
 
