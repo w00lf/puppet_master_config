@@ -41,13 +41,17 @@ class packages {
 	      'security/ca_root_nss', # Need for master for module install wia ss
 	      'graphics/ImageMagick',
 	      'databases/redis',
-	      'www/nginx'
+	      'sysutils/mcollective',
+	      'www/nginx',
+              'archivers/rubygem-bzip2'
 		 ]:
 	      ensure   => installed,
 	      provider => 'freebsd',	
 	      source => "${scheme}://${host}/${urlpath}"
 	}->
-	service {'redis':
+	service {['redis',
+		'nginx',
+		'mcollectived']:
 		ensure => "running",
 	}
 

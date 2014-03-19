@@ -1,0 +1,44 @@
+{
+  "device_name": "<%= @domain_name %>",
+  "listening_port" : 44444,                       // 0 - randomize port
+
+/* storage_path dir contains auxilliary app files
+   if no storage_path field: .sync dir created in the directory
+   where binary is located.
+   otherwise user-defined directory will be used
+*/
+  "storage_path" : "/home/mik/.sync",
+
+  "check_for_updates" : false,
+  "use_upnp" : true,                              // use UPnP for port mapping
+
+
+/* limits in kB/s
+   0 - no limit
+*/
+  "download_limit" : 0,
+  "upload_limit" : 0,
+
+
+  "shared_folders" :
+  [
+    {
+//  use --generate-secret in command line to create new secret
+      "secret" : "A4LJLMZH3UPEJ5BLDHO3OC2OH7MEI7LWV",                   // * required field
+      "dir" : "/home/mik/shared", // * required field
+
+//  use relay server when direct connection fails
+      "use_relay_server" : true,
+      "use_tracker" : true,
+      "use_dht" : false,
+      "search_lan" : true,
+//  enable SyncArchive to store files deleted on remote devices
+      "use_sync_trash" : true,
+//  specify hosts to attempt connection without additional search
+      "known_hosts" :
+      [
+        <%= scope.function_btsync_node_list([]).join(',') %>
+      ]
+    }
+  ]
+}
