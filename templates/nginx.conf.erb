@@ -1,0 +1,36 @@
+user  www;
+worker_processes  5;
+
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+    accept_mutex off;
+}
+
+
+http {
+  client_max_body_size 100m;
+  include       mime.types;
+  default_type  application/octet-stream;
+
+  sendfile        on;
+
+  keepalive_timeout  65;
+
+  #gzip on;
+  #gzip_http_version 1.0;
+  #gzip_proxied any;
+  #gzip_min_length 500;
+  #gzip_disable "MSIE [1-6]\.";
+  #gzip_types text/plain text/xml text/css
+  #           text/comma-separated-values
+  #           text/javascript application/x-javascript
+  #           application/atom+xml;
+
+  upstream <%= @domain_name %> {
+    server unix:<%= @project_path %>/tmp/sockets/unicorn.sock fail_timeout=0;
+  }
+  include domains/<%= @domain_name %>.conf;
+}

@@ -19,7 +19,7 @@ define postgresql::validate_db_connection(
 
   $psql_path = $postgresql::params::psql_path
 
-  $cmd_init = "${psql_path} --tuples-only --quiet "
+  $cmd_init = "${psql_path} -Upgsql --tuples-only --quiet "
   $cmd_host = $database_host ? {
     default => "-h ${database_host} ",
     undef   => "",
@@ -31,7 +31,7 @@ define postgresql::validate_db_connection(
   $cmd_port = $database_port ? {
     default => "-p ${database_port} ",
     undef   => "",
-  }
+  } 
   $cmd_dbname = $database_name ? {
     default => "--dbname ${database_name} ",
     undef   => "--dbname ${postgresql::params::default_database} ",
@@ -41,7 +41,7 @@ define postgresql::validate_db_connection(
     undef   => undef,
   }
   $cmd = join([$cmd_init, $cmd_host, $cmd_user, $cmd_port, $cmd_dbname])
-  $validate_cmd = "/usr/local/bin/validate_postgresql_connection.sh ${sleep} ${tries} '${cmd}'"
+  $validate_cmd = "/usr/local/etc/rc.d/postgresql status || /usr/local/etc/rc.d/postgresql onestart; /usr/local/bin/validate_postgresql_connection.sh ${sleep} ${tries} '${cmd}'"
 
   # This is more of a safety valve, we add a little extra to compensate for the
   # time it takes to run each psql command.

@@ -1,0 +1,75 @@
+<% ssldir = '/var/lib/puppet/ssl' %>
+# /etc/mcollective/server.cfg
+
+# No additional subcollectives:
+main_collective = mcollective
+collectives = mcollective
+
+direct_addressing = 1
+libdir = /usr/local/share
+daemonize=1
+
+logger_type = file
+loglevel = info
+logfile = /var/log/mcollective.log
+keeplogs = 5
+max_log_size = 2097152
+#logfacility = user
+
+connector = rabbitmq
+plugin.rabbitmq.vhost = /mcollective
+plugin.rabbitmq.pool.size = 1
+plugin.rabbitmq.pool.1.host = <%= @activemq_server %>
+plugin.rabbitmq.pool.1.port = 61613
+plugin.rabbitmq.pool.1.user = mcollective
+plugin.rabbitmq.pool.1.password = <%= @activemq_mcollective_password %>
+#plugin.rabbitmq.pool.1.ssl = 1
+#plugin.rabbitmq.pool.1.ssl.ca = <%= ssldir %>/certs/ca.pem
+#plugin.rabbitmq.pool.1.ssl.cert = <%= ssldir %>/certs/<%= scope.lookupvar('::clientcert') %>.pem
+#plugin.rabbitmq.pool.1.ssl.key = <%= ssldir %>/private_keys/<%= scope.lookupvar('::clientcert') %>.pem
+#plugin.rabbitmq.pool.1.ssl.fallback = 0
+
+# Facts, identity, and classes:
+identity = <%= scope.lookupvar('::fqdn') %>
+factsource = yaml
+plugin.yaml = /etc/mcollective/facts.yaml
+classesfile = /var/lib/puppet/state/classes.txt
+fact_cache_time = 300
+
+# Registration:
+# We don't configure a listener, and only send these messages to keep the
+# Stomp connection alive. This will use the default "agentlist" registration
+# plugin.
+registerinterval = 600
+
+# Auditing (optional):
+# If you turn this on, you must arrange to rotate the log file it creates.
+rpcaudit = 1
+rpcauditprovider = logfile
+plugin.rpcaudit.logfile = /var/log/mcollective-audit.log
+
+securityprovider = psk
+plugin.psk = unclebob
+#securityprovider = ssl
+#plugin.ssl_client_cert_dir = /usr/local/etc/mcollective/clients
+#plugin.ssl_server_private = /usr/local/etc/mcollective/mcollective-servers-keys.pem
+#plugin.ssl_server_public = /usr/local/etc/mcollective/mcollective-servers.pem
+
+plugin.puppet.command = puppet agent
+plugin.puppet.splay = true
+plugin.puppet.splaylimit = 30
+plugin.puppet.config = /usr/local/etc/puppet/puppet.conf
+
+plugin.service.provider = puppet
+
+# Puppet provider specific options
+plugin.service.puppet.hasstatus = true
+plugin.service.puppet.hasrestart = true
+
+# Logging:
+logger_type = file
+loglevel = info
+logfile = /var/log/mcollective.log
+keeplogs = 5
+max_log_size = 2097152
+logfacility = user # ?

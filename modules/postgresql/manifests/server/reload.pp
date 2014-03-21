@@ -7,7 +7,7 @@ class postgresql::server::reload {
   if($ensure == 'present' or $ensure == true) {
     exec { 'postgresql_reload':
       path        => '/usr/bin:/usr/sbin:/bin:/sbin',
-      command     => "service ${service_name} reload",
+      command     => "service ${service_name} stop && service ${service_name} start",
       onlyif      => $service_status,
       refreshonly => true,
     }

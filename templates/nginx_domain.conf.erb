@@ -1,0 +1,14 @@
+server {
+    listen 80;
+    server_name <%= @domain_name %>;
+
+    access_log  /var/log/nginx/<%= @domain_name %>.access.log;
+    error_log  /var/log/nginx/<%= @domain_name %>.error.log;
+
+    root <%= @project_path %>/public;
+
+    error_page 502 503 504  /50x.html;
+    location = /50x.html {
+        root /usr/local/www/nginx-dist;
+    }
+}

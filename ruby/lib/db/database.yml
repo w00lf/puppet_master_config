@@ -41,8 +41,8 @@
 
 adapter: postgresql
 encoding: unicode
-database: test_debug
+database: orfograph
 pool: 5
 username: orfograph
-password: HjeRd8dS
+password: orfograph
 port: 5432
