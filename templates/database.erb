@@ -45,7 +45,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= @psql_current_database %>
+  database: <%= @database %>
   pool: 5
-  username: <%= @psql_username %>
-  password:
+  username: <%= @db_user %>
+  password: <%= @db_user_passwd %>

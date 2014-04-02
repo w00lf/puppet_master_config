@@ -1,8 +1,8 @@
-class murder_setup {
-  $deploy_path = '/usr/local/www'
+class murder_setup($deploy_path = '/usr/local/www') {
   $murder_dist = 'murder.tgz'
   
-  file{[$project_path, "${deploy_path}/shared/"]:
+  file{"${deploy_path}/shared/":
+    owner  => "mik",
     ensure => directory,
     mode   => 750,          
   }->
@@ -15,4 +15,6 @@ class murder_setup {
   exec{"unpack murder dist files":
     command => "tar -xvzf /tmp/${murder_dist} -C ${deploy_path}/shared/",
   }
+
+
 }

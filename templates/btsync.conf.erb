@@ -7,7 +7,7 @@
    where binary is located.
    otherwise user-defined directory will be used
 */
-  "storage_path" : "/home/mik/.sync",
+  "storage_path" : "<%= @storage_path %>",
 
   "check_for_updates" : false,
   "use_upnp" : true,                              // use UPnP for port mapping
@@ -24,8 +24,8 @@
   [
     {
 //  use --generate-secret in command line to create new secret
-      "secret" : "A4LJLMZH3UPEJ5BLDHO3OC2OH7MEI7LWV",                   // * required field
-      "dir" : "/home/mik/shared", // * required field
+      "secret" : "AUA55Z567AE5A7JD7HARWVAXFQA2WOAQO",                   // * required field
+      "dir" : "<%= @shared_dir %>", // * required field
 
 //  use relay server when direct connection fails
       "use_relay_server" : true,

@@ -1,0 +1,27 @@
+APP_PATH = "<%= @project_path %>/current"
+
+worker_processes 3
+working_directory APP_PATH
+listen File.join(APP_PATH, 'tmp/sockets/unicorn.sock'), :backlog => 1024
+pid "#{APP_PATH}/tmp/pids/unicorn.pid"
+stderr_path File.join(APP_PATH,'log/unicorn.stderr.log')
+stdout_path File.join(APP_PATH,'log/unicorn.stdout.log')
+
+user '<%= @server_user %>'
+preload_app true
+timeout 30
+
+if GC.respond_to?(:copy_on_write_friendly=)
+  GC.copy_on_write_friendly = true
+end
+
+Unicorn::Configurator::DEFAULTS[:logger].formatter = Logger::Formatter.new
+
+before_fork do |server, worker|
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
+end
+
+after_fork do |server, worker|
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
+end
+

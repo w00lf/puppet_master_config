@@ -1,4 +1,4 @@
-user  www;
+user  <%= @server_user %>;
 worker_processes  5;
 
 pid        /var/run/nginx.pid;
@@ -30,7 +30,7 @@ http {
   #           application/atom+xml;
 
   upstream <%= @domain_name %> {
-    server unix:<%= @project_path %>/tmp/sockets/unicorn.sock fail_timeout=0;
+    server unix:<%= @project_path %>/current/tmp/sockets/unicorn.sock fail_timeout=0;
   }
   include domains/<%= @domain_name %>.conf;
 }

@@ -1,4 +1,4 @@
-class nginx_setup{
+class nginx_setup($server_user){
   $nginx_root = '/usr/local/etc/nginx'
   $domain_name = $::fqdn
 
@@ -22,5 +22,8 @@ class nginx_setup{
   }->
   service {'nginx':
     ensure => "running",
+  }
+  exec{"echo 'nginx_enable=\"YES\"' >> /etc/rc.conf":
+    unless => 'grep nginx /etc/rc.conf'
   }
 }
